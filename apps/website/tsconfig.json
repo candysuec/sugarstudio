@@ -1,0 +1,40 @@
+{
+  "extends": "../../packages/config/tsconfig/base.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+            "ui": ["../../packages/ui/index.tsx"],
+            "foundation/*": ["../../packages/foundation/*"],
+            "@sugarstudio/ui": ["../../packages/ui/index.tsx"],
+            "@sugarstudio/foundation/*": ["../../packages/foundation/*"]
+          },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "jsx": "preserve"
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

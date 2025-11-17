@@ -1,0 +1,39 @@
+# Supabase CLI configuration file
+# Learn more about the CLI: https://supabase.com/docs/guides/cli
+
+[global]
+  # Link your local project to a Supabase project.
+  # Run "supabase link" to setup.
+  project_id = ""
+
+[api]
+  # Port for the API URL.
+  port = 54321
+
+[db]
+  # Port for the database URL.
+  port = 54322
+
+[studio]
+  # Port for the Studio URL.
+  port = 54323
+
+[inbucket]
+  # Port for the Inbucket URL.
+  port = 54324
+
+[realtime]
+  # Port for the Realtime URL.
+  port = 54325
+
+[storage]
+  # Port for the Storage URL.
+  port = 54326
+
+[functions]
+  # Port for the Functions URL.
+  port = 54327
+
+[auth]
+  # Port for the Auth URL.
+  port = 54328

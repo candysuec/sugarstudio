@@ -1,0 +1,22 @@
+{
+  "name": "sugarstudio",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "pnpm run sync-envs && turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "clean": "rm -rf node_modules && turbo run clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "sync-envs": "bash scripts/sync-envs.sh"
+  },
+  "devDependencies": {
+    "prettier": "^3.1.1",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.9.0",
+  "pnpm": {},
+  "dependencies": {
+    "dotenv-cli": "^11.0.0"
+  }
+}
