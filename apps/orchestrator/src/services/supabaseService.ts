@@ -18,17 +18,19 @@ export const getSupabaseClient = (): SupabaseClient => {
 };
 
 export const logToSupabase = async (log: Log) => {
-  try {
-    const client = getSupabaseClient();
-    const { error } = await client.from('orchestrator_logs').insert([log]);
-    if (error) {
-      logger.error('Error logging to Supabase:', error.message);
-    } else {
-      logger.info('Log successfully written to Supabase.');
-    }
-  } catch (error: any) {
-    logger.error('Supabase logging failed:', error.message);
-  }
+  // Temporarily disabled as Supabase is not synced yet
+  logger.warn('Supabase logging is temporarily disabled as the database is not synced.');
+  // try {
+  //   const client = getSupabaseClient();
+  //   const { error } = await client.from('orchestrator_logs').insert([log]);
+  //   if (error) {
+  //     logger.error('Error logging to Supabase:', error.message);
+  //   } else {
+  //     logger.info('Log successfully written to Supabase.');
+  //   }
+  // } catch (error: any) {
+  //   logger.error('Supabase logging failed:', error.message);
+  // }
 };
 
 // Placeholder for other Supabase interactions

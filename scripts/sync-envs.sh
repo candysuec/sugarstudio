@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # This script syncs environment variables from .env.shared to app-specific .env.local files.
+# It ensures that app-specific variables in .env.local override shared variables,
+# and performs variable expansion. Each .env.local file becomes self-contained.
 
 # Define the path to the shared .env file
 SHARED_ENV=".env.shared"
@@ -16,14 +18,6 @@ if [ ! -f "$SHARED_ENV" ]; then
   exit 1
 fi
 
-# Read shared variables into an associative array
-declare -A SHARED_VARS
-while IFS='=' read -r key value; do
-  if [[ ! -z "$key" && "$key" != "#"* ]]; then
-    SHARED_VARS["$key"]="$value"
-  fi
-done < "$SHARED_ENV"
-
 # Loop through each app
 for APP in "${APPS[@]}"; do
   APP_DIR="apps/$APP"
@@ -32,32 +26,31 @@ for APP in "${APPS[@]}"; do
 
   echo "Processing $APP_DIR..."
 
-  # Create the app's .env.local if it doesn't exist
-  if [ ! -f "$APP_ENV_LOCAL" ]; then
-    touch "$APP_ENV_LOCAL"
-    echo "Created $APP_ENV_LOCAL"
-  fi
+  # Start a subshell to manage environment variables for this app
+  (
+    # Load shared variables first
+    set -a # Automatically export all variables
+    source "$SHARED_ENV"
+    set +a # Stop automatically exporting
 
-  # Read existing app-specific variables into an associative array
-  declare -A APP_VARS
-  while IFS='=' read -r key value; do
-    if [[ ! -z "$key" && "$key" != "#"* ]]; then
-      APP_VARS["$key"]="$value"
+    # Load app-specific variables, allowing them to override shared ones
+    if [ -f "$APP_ENV_LOCAL" ]; then
+      set -a
+      source "$APP_ENV_LOCAL"
+      set +a
     fi
-  done < "$APP_ENV_LOCAL"
 
-  # Merge shared variables into app variables, prioritizing shared
-  for key in "${!SHARED_VARS[@]}"; do
-    APP_VARS["$key"]="${SHARED_VARS["$key"]}"
-  done
+    # Write all currently active environment variables to a temporary file
+    # Filter out shell-internal variables and functions, and only include relevant ones
+    # Also, ensure variables are expanded
+    env | grep -E '^(SUPABASE_|NEXTAUTH_|GOOGLE_|OPENAI_|GEMINI_|NOTION_|DATABASE_|LOG_|ENVIRONMENT_|ENV_MODE_|APP_BASE_URL|PORT|NEXT_PUBLIC_)' | while IFS='=' read -r key value; do
+      # Ensure the value is properly quoted if it contains spaces or special characters
+      echo "${key}=\"${value}\"" >> "$APP_ENV_TEMP"
+    done
 
-  # Write merged variables to a temporary file
-  > "$APP_ENV_TEMP" # Clear temp file
-  for key in "${!APP_VARS[@]}"; do
-    echo "${key}=${APP_VARS["$key"]}" >> "$APP_ENV_TEMP"
-  done
+  ) # End of subshell
 
-  # Replace the original .env.local with the merged content
+  # Replace the original .env.local with the merged and expanded content
   mv "$APP_ENV_TEMP" "$APP_ENV_LOCAL"
   echo "Synced environment variables for $APP_DIR"
 
