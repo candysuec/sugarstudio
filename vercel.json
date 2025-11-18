@@ -9,22 +9,22 @@
     {
       "src": "apps/website/package.json",
       "use": "@vercel/next",
-      "config": { "outputDirectory": "apps/website/.next" }
+      "config": { "outputDirectory": ".next" }
     },
     {
       "src": "apps/knisoci/package.json",
       "use": "@vercel/next",
-      "config": { "outputDirectory": "apps/knisoci/.next" }
+      "config": { "outputDirectory": ".next" }
     },
     {
       "src": "apps/candyland/package.json",
       "use": "@vercel/next",
-      "config": { "outputDirectory": "apps/candyland/.next" }
+      "config": { "outputDirectory": ".next" }
     },
     {
       "src": "apps/orchestrator/package.json",
       "use": "@vercel/node",
-      "config": { "outputDirectory": "apps/orchestrator/dist" }
+      "config": { "outputDirectory": "dist" }
     }
   ]
 }
