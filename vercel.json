@@ -1,0 +1,30 @@
+{
+  "rewrites": [
+    { "source": "/website/(.*)", "destination": "/apps/website/$1" },
+    { "source": "/knisoci/(.*)", "destination": "/apps/knisoci/$1" },
+    { "source": "/candyland/(.*)", "destination": "/apps/candyland/$1" },
+    { "source": "/orchestrator/(.*)", "destination": "/apps/orchestrator/$1" }
+  ],
+  "builds": [
+    {
+      "src": "apps/website/package.json",
+      "use": "@vercel/next",
+      "config": { "outputDirectory": "apps/website/.next" }
+    },
+    {
+      "src": "apps/knisoci/package.json",
+      "use": "@vercel/next",
+      "config": { "outputDirectory": "apps/knisoci/.next" }
+    },
+    {
+      "src": "apps/candyland/package.json",
+      "use": "@vercel/next",
+      "config": { "outputDirectory": "apps/candyland/.next" }
+    },
+    {
+      "src": "apps/orchestrator/package.json",
+      "use": "@vercel/node",
+      "config": { "outputDirectory": "apps/orchestrator/dist" }
+    }
+  ]
+}
