@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/", "destination": "/apps/website" },
     { "source": "/website/(.*)", "destination": "/apps/website/$1" },
     { "source": "/knisoci/(.*)", "destination": "/apps/knisoci/$1" },
     { "source": "/candyland/(.*)", "destination": "/apps/candyland/$1" },
