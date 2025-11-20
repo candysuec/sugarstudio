@@ -52,8 +52,8 @@ importers:
   apps/candyland:
     dependencies:
       '@prisma/client':
-        specifier: ^7.0.0
-        version: 7.0.0(typescript@5.9.3)
+        specifier: ^5.19.0
+        version: 5.19.0(prisma@5.19.0)
       '@sugarstudio/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -666,10 +666,6 @@ packages:
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: true
 
-  /@prisma/client-runtime-utils@7.0.0:
-    resolution: {integrity: sha512-PAiFgMBPrLSaakBwUpML5NevipuKSL3rtNr8pZ8CZ3OBXo0BFcdeGcBIKw/CxJP6H4GNa4+l5bzJPrk8Iq6tDw==}
-    dev: false
-
   /@prisma/client@5.19.0(prisma@5.19.0):
     resolution: {integrity: sha512-CzOpau+q1kEWQyoQMvlnXIHqPvwmWbh48xZ4n8KWbAql0p8PC0BIgSTYW5ncxXa4JSEff0tcoxSZB874wDstdg==}
     engines: {node: '>=16.13'}
@@ -681,22 +677,6 @@ packages:
         optional: true
     dependencies:
       prisma: 5.19.0
-    dev: false
-
-  /@prisma/client@7.0.0(typescript@5.9.3):
-    resolution: {integrity: sha512-FM1NtJezl0zH3CybLxcbJwShJt7xFGSRg+1tGhy3sCB8goUDnxnBR+RC/P35EAW8gjkzx7kgz7bvb0MerY2VSw==}
-    engines: {node: ^20.19 || ^22.12 || ^24.0}
-    peerDependencies:
-      prisma: '*'
-      typescript: '>=5.4.0'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-      typescript:
-        optional: true
-    dependencies:
-      '@prisma/client-runtime-utils': 7.0.0
-      typescript: 5.9.3
     dev: false
 
   /@prisma/debug@5.19.0:
@@ -5184,6 +5164,7 @@ packages:
     resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
+    dev: true
 
   /unbox-primitive@1.1.0:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
