@@ -1,0 +1,33 @@
+{
+  "name": "knisoci",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "dotenv -f apps/knisoci/.env.local -- next dev -p 3002",
+    "build": "next build",
+    "start": "next start -p 3002",
+    "lint": "eslint . --cache --cache-location ../../node_modules/.eslintcache",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@prisma/client": "5.19.0",
+    "@sugarstudio/supabase-client": "workspace:*",
+    "@supabase/ssr": "^0.1.0",
+    "@supabase/supabase-js": "^2.39.3",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "sonner": "^1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "dotenv": "^16.3.1",
+    "postcss": "^8",
+    "prisma": "^5.19.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
+  }
+}

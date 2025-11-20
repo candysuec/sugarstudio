@@ -1,70 +1,232 @@
-import { Header } from '../../components/Header';
-import { Footer } from '../../components/Footer';
-import { Button } from 'ui'; // Assuming 'ui' package is correctly configured
+'use client';
 
-export default function ContactPage() {
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { SectionHeader } from '@sugarstudio/ui';
+import { Button } from '@sugarstudio/ui';
+import { Input } from '@sugarstudio/ui';
+import { Textarea } from '@sugarstudio/ui';
+import { Label } from '@sugarstudio/ui';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@sugarstudio/ui';
+
+const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Contact form submitted:', formData);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Thank you for your message! I will get back to you shortly.');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        alert(`Failed to send message: ${result.error || 'Unknown error'}`);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('An unexpected error occurred. Please try again later.');
+    }
+  };
+
+  const faqs = [
+    {
+      question: "What is the StoryBrand Framework?",
+      answer: "The StoryBrand Framework is a proven communication strategy that helps businesses clarify their message so customers listen. It positions your customer as the hero and your brand as the guide, leading to increased engagement and sales."
+    },
+    {
+      question: "Who do you typically work with?",
+      answer: "I primarily partner with ambitious founders, CEOs, creatives, and teams who are looking for brand clarity, automation systems, better UX, faster execution, and a stronger digital presence."
+    },
+    {
+      question: "What kind of results can I expect?",
+      answer: "Clients typically achieve a brand they're proud of, systems that scale, and a business that feels easier and more aligned. This often translates to increased leads, conversions, and operational efficiency."
+    },
+    {
+      question: "How do we start working together?",
+      answer: "The best way to begin is to schedule a free strategy call. We'll discuss your current challenges, your vision, and how my services can help you achieve your goals. You can book a call directly through the button on this page."
+    },
+  ];
+
   return (
-    <>
-      <Header />
-      <main className="min-h-screen bg-matte-dark text-silver-accent py-12">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl font-bold text-silver-light mb-8 text-center">Contact Us</h1>
-
-          <p className="text-lg leading-relaxed mb-8 text-center">
-            Have questions about KniBrand, our ecosystem, or how we can help your brand thrive?
-            Reach out to us using the form below or through our direct contact information.
+    <div className="min-h-screen bg-brand-black text-silver">
+      {/* Hero Section for Contact Page */}
+      <section className="relative py-20 md:py-32 flex items-center justify-center text-center px-4 overflow-hidden">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="max-w-4xl z-10"
+        >
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight mb-6 text-silver">
+            Let's Connect & Clarify Your Path
+          </h1>
+          <p className="text-xl md:text-2xl text-brand-gray mb-8">
+            You don’t have to figure this out alone. Reach out, and let's build something meaningful.
           </p>
+        </motion.div>
+      </section>
 
-          <form className="bg-gray-800 p-8 rounded-lg shadow-lg border border-silver-dark">
-            <div className="mb-6">
-              <label htmlFor="name" className="block text-silver-light text-sm font-bold mb-2">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-silver-light"
-                placeholder="Your Name"
-              />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="email" className="block text-silver-light text-sm font-bold mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-silver-light"
-                placeholder="your@example.com"
-              />
-            </div>
-            <div className="mb-6">
-              <label htmlFor="message" className="block text-silver-light text-sm font-bold mb-2">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={5}
-                className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 border-gray-600 text-silver-light"
-                placeholder="Your message..."
-              ></textarea>
-            </div>
-            <div className="flex items-center justify-center">
-              <Button>Send Message</Button>
-            </div>
-          </form>
+      {/* Contact Form & Book a Call CTA */}
+      <section className="py-20 bg-brand-slate px-4">
+        <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}
+            className="bg-brand-black p-8 rounded-lg shadow-soft"
+          >
+            <h2 className="text-3xl font-bold text-silver mb-6">Send Me a Message</h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <Label htmlFor="name" className="text-silver mb-2 block">Name</Label>
+                <Input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your Name"
+                  className="bg-brand-slate border-brand-gray text-silver focus:ring-blue-primary focus:border-blue-primary"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="email" className="text-silver mb-2 block">Email</Label>
+                <Input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your@email.com"
+                  className="bg-brand-slate border-brand-gray text-silver focus:ring-blue-primary focus:border-blue-primary"
+                  required
+                />
+              </div>
+              <div>
+                <Label htmlFor="message" className="text-silver mb-2 block">Message</Label>
+                <Textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  placeholder="Tell me about your project or challenge..."
+                  rows={6}
+                  className="bg-brand-slate border-brand-gray text-silver focus:ring-blue-primary focus:border-blue-primary"
+                  required
+                />
+              </div>
+              <Button type="submit" size="lg" variant="primary" className="w-full">
+                Send Message
+              </Button>
+            </form>
+          </motion.div>
 
-          <div className="mt-12 text-center">
-            <h2 className="text-2xl font-semibold text-silver-light mb-4">Other Ways to Connect</h2>
-            <p className="text-lg mb-2">Email: <a href="mailto:info@knibrand.com" className="text-silver-light hover:underline">info@knibrand.com</a></p>
-            <p className="text-lg">Phone: <a href="tel:+1-555-123-4567" className="text-silver-light hover:underline">+1 (555) 123-4567</a></p>
-          </div>
+          {/* Book a Call CTA */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex flex-col justify-center items-center bg-brand-black p-8 rounded-lg shadow-soft text-center"
+          >
+            <h2 className="text-3xl font-bold text-silver mb-6">Prefer to Talk?</h2>
+            <p className="text-xl text-brand-gray mb-8">
+              Let's dive deep into your vision and challenges during a free, no-obligation strategy call.
+            </p>
+            <Button href="https://calendly.com/your-booking-link" target="_blank" size="lg" variant="outline">
+              Book a Strategy Call
+            </Button>
+            <p className="text-brand-gray text-sm mt-4">
+              (Link to your Calendly or booking system)
+            </p>
+          </motion.div>
         </div>
-      </main>
-      <Footer />
-    </>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20 bg-brand-black px-4">
+        <div className="container mx-auto max-w-3xl">
+          <SectionHeader
+            title="Frequently Asked Questions"
+            subtitle="Find quick answers to common questions about my services and approach."
+          />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-12"
+          >
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, index) => (
+                <AccordionItem value={`item-${index}`} key={index} className="border-b border-brand-slate">
+                  <AccordionTrigger className="text-silver hover:no-underline text-lg font-semibold py-4">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-brand-gray pb-4">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Reassurance + Success Summary */}
+      <section className="py-20 bg-blue-primary text-white text-center px-4">
+        <div className="container mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6 }}
+            className="text-4xl md:text-5xl font-bold mb-6"
+          >
+            Your Success Story Starts Here.
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto"
+          >
+            Stop feeling overwhelmed and start building a business that truly reflects your vision and delivers consistent results.
+          </motion.p>
+          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
+            Let's Make It Happen
+          </Button>
+        </div>
+      </section>
+    </div>
   );
-}
+};
+
+export default ContactPage;

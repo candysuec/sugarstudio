@@ -1,0 +1,258 @@
+// prisma/schema.prisma
+generator client {
+  provider        = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  brands        Brand[]
+  workspaces    Workspace[] // New: Many-to-many relationship with Workspace
+  selfRepairLogs SelfRepairLog[] // Added inverse relation
+  safetyProfile SafetyProfile? // Inverse relation for SafetyProfile
+  reports       Report[] // Inverse relation for Report
+  role          Role      @default(VIEWER) // Added role field
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime? @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String   @id @default(cuid())
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Brand {
+  id                 String   @id @default(cuid())
+  name               String
+  description        String?
+  mission            String?
+  vision             String?
+  values             Json? // Store as JSON array of strings
+  targetAudience     String?
+  usp                String?
+  personalityTraits  Json? // Store as JSON array of strings
+  customerProfiles   Json? // New field: Store as JSON array of objects
+  brandPositioningMap Json? // New field: Store as JSON object
+  messagingMatrix    Json? // Store as JSON object
+  postIdeas          Json? // Store as JSON array of objects
+  brandBook          String? // Store as Markdown string
+  toneGuide          String? // Store as Markdown string
+  contentPillars     Json? // Store as JSON array of objects
+  slogans            Json? // Store as JSON array of strings
+  colorPalettes      Json? // Store as JSON array of objects
+  logoIdeas          Json? // Store as JSON array of strings
+  generatedLogoImage String?
+  typographyPairings Json? // Store as JSON array of objects
+  messagingGuide     String? // Store as Markdown string
+  personaSheets      String? // Store as Markdown string
+  imageryAndArtDirection Json? // Store as JSON object for mood boards, photography, illustration
+  pressKit               String? // Store as Markdown string
+  salesDeck              String? // Store as Markdown string
+  websiteCopy            String? // Store as Markdown string
+  notionPageId           String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+  userId                 String
+  user                   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspaceId            String? // New: Foreign key for Workspace
+  workspace              Workspace? @relation(fields: [workspaceId], references: [id]) // New: Relation to Workspace
+  @@index([userId])
+  @@index([workspaceId]) // New: Index for workspaceId
+}
+
+model SelfRepairLog {
+  id        String   @id @default(cuid())
+  timestamp DateTime @default(now())
+  mode      String // "development" | "production"
+  overall   String // "✅ All systems nominal" | "⚠️ Could not parse model output."
+  details   Json? // Store the full checks object as JSON
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model SafetyProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  safetyScore       Int      @default(0)
+  monitoredAccounts Json?    // e.g., [{ platform: "twitter", handle: "@username" }]
+  lastScan          DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Report {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reportedUrl  String
+  category     String   // e.g., "IMPERSONATION", "PHISHING", "SCAM"
+  notes        String?
+  status       String   @default("PENDING") // PENDING, IN_REVIEW, RESOLVED, DISMISSED
+  resolution   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
+
+// New Models for remaining tasks
+
+model Workspace {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[] // Many-to-many relationship with User (implicit)
+  brands    Brand[]  // One-to-many relationship with Brand
+}
+
+model ContentCalendar {
+  id        String   @id @default(cuid())
+  brandId   String
+  brand     Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  date      DateTime
+  content   String
+  status    String   // e.g., "DRAFT", "SCHEDULED", "PUBLISHED"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([brandId])
+}
+
+model Asset {
+  id        String   @id @default(cuid())
+  brandId   String
+  brand     Brand    @relation(fields: [brandId], references: [id], onDelete: Cascade)
+  type      String   // e.g., "IMAGE", "VIDEO", "DOCUMENT"
+  url       String
+  metadata  Json?    // Store asset-specific metadata
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([brandId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  brandId   String?
+  brand     Brand?   @relation(fields: [brandId], references: [id], onDelete: SetNull)
+  action    String   // e.g., "BRAND_CREATED", "ASSET_UPLOADED", "SETTING_CHANGED"
+  details   Json?    // Store details of the action
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([brandId])
+}
+
+// Stripe Integration Models
+model Customer {
+  id           String        @id @default(cuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId String    @unique
+  subscriptions Subscription[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Product {
+  id           String   @id @default(cuid())
+  stripeProductId String @unique
+  name         String
+  description  String?
+  active       Boolean  @default(true)
+  prices       Price[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Price {
+  id           String   @id @default(cuid())
+  stripePriceId String @unique
+  productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  active       Boolean  @default(true)
+  unitAmount   Int
+  currency     String
+  type         String   // "one_time" | "recurring"
+  interval     String?  // "day" | "week" | "month" | "year"
+  intervalCount Int?
+  subscriptions Subscription[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Subscription {
+  id           String   @id @default(cuid())
+  customerId   String
+  customer     Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  priceId      String
+  price        Price    @relation(fields: [priceId], references: [id], onDelete: Cascade)
+  stripeSubscriptionId String @unique
+  status       String   // "active" | "canceled" | "past_due" | "unpaid" | "incomplete" | "incomplete_expired" | "trialing"
+  cancelAtPeriodEnd Boolean @default(false)
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  endedAt      DateTime?
+  cancelAt     DateTime?
+  canceledAt   DateTime?
+  trialStart   DateTime?
+  trialEnd     DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}

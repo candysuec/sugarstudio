@@ -1,5 +1,5 @@
 import cron from 'node-cron';
-import { logger } from '../utils/logger';
+import { logger } from '@sugarstudio/utils';
 import { enqueueTask } from '../services/queueService';
 import { Task } from '../types/Task';
 import { generateId } from '@sugarstudio/utils';

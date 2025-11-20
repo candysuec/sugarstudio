@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { logger } from '../utils/logger';
-import { writeLogToFile } from '../services/logService';
 import { Task } from '../types/Task';
 import { enqueueTask } from '../services/queueService';
 import { generateSOP as generateSOPService } from '../services/sopsService';
@@ -10,7 +9,6 @@ export const createTask = async (req: Request, res: Response) => {
     const task: Task = req.body;
     logger.info(`Received new task: ${task.type}`);
     await enqueueTask(task);
-    await writeLogToFile(`Task created: ${task.type} (ID: ${task.id})`);
     res.status(202).json({ message: 'Task received and enqueued', task });
   } catch (error: any) {
     logger.error(`Error creating task: ${error.message}`, error.stack);

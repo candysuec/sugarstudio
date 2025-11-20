@@ -33,12 +33,6 @@ for APP in "${APPS[@]}"; do
     source "$SHARED_ENV"
     set +a # Stop automatically exporting
 
-    # Load app-specific variables, allowing them to override shared ones
-    if [ -f "$APP_ENV_LOCAL" ]; then
-      set -a
-      source "$APP_ENV_LOCAL"
-      set +a
-    fi
 
     # Write all currently active environment variables to a temporary file
     # Filter out shell-internal variables and functions, and only include relevant ones

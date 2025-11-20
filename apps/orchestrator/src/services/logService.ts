@@ -1,8 +1,41 @@
-// apps/orchestrator/src/services/logService.ts
-import { logger } from '../utils/logger';
+import { logger } from "../utils/logger";
+import { supabase } from "../utils/supabaseClient";
 
-export const writeLogToFile = async (message: string): Promise<void> => {
-  logger.info(`LogService: ${message}`);
-  // In a real scenario, this might write to a dedicated log file, a database, or a third-party logging service.
-  // For now, it just logs via the existing logger.
-};
+export async function writeLogToFile(message: string) {
+  try {
+    logger.info(`[writeLogToFile] ${message}`);
+  } catch (err) {
+    logger.error("writeLogToFile failed:", err);
+  }
+}
+
+export class LogService {
+  static async insertLog(entry: any) {
+    logger.info("LogService: Attempting to insert log into Supabase...");
+
+    const { data, error } = await supabase
+      .from("orchestrator_logs")
+      .insert(entry);
+
+    if (error) {
+      logger.error("Error logging to Supabase:", error);
+      return { success: false, error };
+    }
+
+    logger.info("LogService: Log successfully inserted into Supabase.");
+    return { success: true, data };
+  }
+
+  static async process(task: any) {
+    const logEntry = {
+      level: task?.level ?? "info",
+      message: task?.message ?? "No message",
+      metadata: task?.metadata ?? {},
+      created_at: new Date().toISOString(),
+    };
+
+    return await this.insertLog(logEntry);
+  }
+}
+
+export default LogService;

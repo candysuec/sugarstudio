@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const { logger } = require('shared-utils'); // Assuming shared-utils is available
+const { logger } = require('@sugarstudio/utils');
+const { startCronJobs } = require('./src/workers/cronJobs'); // Import startCronJobs
 
 const app = express();
 const PORT = process.env.PORT || 3010;
@@ -37,4 +38,5 @@ app.post('/write-sop', (req, res) => {
 
 app.listen(PORT, () => {
   logger.info(`Orchestrator running on port ${PORT}`);
+  startCronJobs(); // Start cron jobs when the server begins listening
 });

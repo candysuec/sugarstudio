@@ -7,8 +7,13 @@ import { PORT } from './utils/env';
 import healthRoutes from './routes/health';
 import taskRoutes from './routes/tasks';
 import logRoutes from './routes/logs';
+import { startAIJobWorker } from "./workers/aiJobWorker";
 
 const app = express();
+
+// Start the AI Job Worker when the server bootstraps
+startAIJobWorker();
+
 
 // Middleware
 app.use(cors());
