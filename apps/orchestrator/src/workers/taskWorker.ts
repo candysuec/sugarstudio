@@ -3,7 +3,7 @@ import { dequeueTask } from "../services/queueService";
 import { createNotionPage } from "../services/notionService";
 import { generateSOPWithAI } from "../services/sopsService";
 import LogService from "../services/logService";
-import { logger } from "../utils/logger";
+import { logger } from "@sugarstudio/utils";
 
 const TASK_PROCESSING_INTERVAL = 5000;
 

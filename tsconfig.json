@@ -1,34 +1,29 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "baseUrl": ".",
     "paths": {
+      "@sugarstudio/utils": ["packages/utils/src"],
+      "@sugarstudio/supabase-client": ["packages/supabase-client/src"],
+      "foundation": ["packages/foundation"],
+      "@sugarstudio/ui": ["packages/ui/src"],
       "@/*": ["./*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
+  "references": [
+    { "path": "apps/candyland" },
+    { "path": "apps/knisoci" },
+    { "path": "apps/orchestrator" },
+    { "path": "apps/website" },
+    { "path": "packages/config/eslint" },
+    { "path": "packages/config/tsconfig" },
+    { "path": "packages/foundation" },
+    { "path": "packages/shared-utils" },
+    { "path": "packages/supabase-client" },
+    { "path": "packages/ui" },
+    { "path": "packages/utils" }
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": [],
+  "exclude": ["node_modules"]
 }
+

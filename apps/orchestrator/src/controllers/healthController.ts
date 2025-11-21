@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { logger } from '../utils/logger';
+import { logger } from '@sugarstudio/utils';
 
 export const getHealthStatus = (req: Request, res: Response) => {
   logger.info('Health check performed.');

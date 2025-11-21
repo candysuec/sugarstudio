@@ -1,5 +1,5 @@
 // src/services/mockAIProvider.ts
-import { logger } from '../utils/logger'; // Assuming logger is available
+import { logger } from '@sugarstudio/utils';
 
 export const mockAIProvider = {
   generateSOP: async (prompt: string): Promise<any> => {

@@ -1,6 +1,6 @@
 import { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } from '@google/generative-ai'; // Import HarmCategory and HarmBlockThreshold
 import { logger } from '@sugarstudio/utils';
-import { getGeminiModelName, getDefaultGeminiModel, GeminiModel } from '../../src/utils/geminiModels'; // Import model utilities
+import { getGeminiModelName, getDefaultGeminiModel, GeminiModel } from '@sugarstudio/utils';
 import { geminiCache } from '@sugarstudio/utils';
 import { costTracker } from '@sugarstudio/utils';
 
@@ -76,12 +76,13 @@ export const geminiProvider = {
       const text = response.text();
 
       // Record API usage
+      console.log(JSON.stringify(result.response, null, 2));
       const usage = result.response.usageMetadata;
       if (usage) {
         costTracker.recordGeminiUsage(
           selectedModelName,
-          usage.promptTokenCount || 0,
-          usage.candidatesTokenCount || 0,
+          usage.promptTokenCount ?? 0,
+          usage.candidatesTokenCount ?? 0,
           'generateSOP'
         );
       }
@@ -164,8 +165,8 @@ export const geminiProvider = {
       if (usage) {
         costTracker.recordGeminiUsage(
           selectedModelName,
-          usage.promptTokenCount || 0,
-          usage.candidatesTokenCount || 0,
+          usage.promptTokenCount ?? 0,
+          usage.candidatesTokenCount ?? 0,
           'generateImageDescription'
         );
       }

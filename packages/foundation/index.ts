@@ -24,5 +24,6 @@ export * from './schemas/sop.schema';
 
 // Utils
 export * from './utils/ids';
+export { generateUniqueId } from './utils/ids';
 export * from './utils/dates';
 export * from './utils/fetch';

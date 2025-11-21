@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: '../orchestrator/.env.local' }); // Explicitly load environment variables with a simpler relative path
 
 import { startServer } from './server';
-import { logger } from './utils/logger';
+import { logger } from '@sugarstudio/utils';
 import { startCronJobs } from './workers/cronJobs';
 import { startTaskWorker } from './workers/taskWorker';
 

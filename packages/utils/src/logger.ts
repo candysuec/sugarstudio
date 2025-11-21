@@ -1,4 +1,5 @@
-import winston from 'winston';
+import winston, { Logform } from 'winston';
+import { TransformableInfo } from 'logform';
 import path from 'path';
 import fs from 'fs';
 
@@ -11,8 +12,9 @@ if (!fs.existsSync(logDir)) {
 
 const { combine, timestamp, printf, colorize } = winston.format;
 
-const logFormat = printf(({ level, message, timestamp, stack }) => {
-  return `${timestamp} ${level}: ${message}${stack ? `\n${stack}` : ''}`;
+const logFormat = printf((info: TransformableInfo) => {
+  const { level, message, timestamp: ts, stack } = info;
+  return `${ts} ${level}: ${message}${stack ? `\n${stack}` : ''}`;
 });
 
 export const logger = winston.createLogger({

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
-import { logger } from '../utils/logger';
-import { getLogsFromFile } from '../utils/logger';
+import { logger, getLogsFromFile } from '@sugarstudio/utils';
 
 export const getLogs = async (req: Request, res: Response) => {
   try {

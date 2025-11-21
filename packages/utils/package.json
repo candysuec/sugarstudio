@@ -6,11 +6,18 @@
   "types": "./src/index.ts",
   "license": "MIT",
   "scripts": {
+    "build": "tsc",
     "lint": "eslint . --cache --cache-location ../../node_modules/.eslintcache",
     "clean": "rm -rf .turbo node_modules",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.3.0",
+    "winston": "^3.13.0",
+    "logform": "^2.6.0"
   }
 }

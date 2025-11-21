@@ -1,6 +1,6 @@
 // sugarstudio/apps/orchestrator/src/utils/costTracker.ts
 
-import { logger } from '@sugarstudio/utils';
+import { logger } from './logger';
 
 interface GeminiUsageRecord {
   timestamp: Date;

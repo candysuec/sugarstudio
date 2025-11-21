@@ -19,6 +19,7 @@
     "node-cron": "^3.0.3",
     "@sugarstudio/utils": "workspace:*",
     "@sugarstudio/supabase-client": "workspace:*",
+    "foundation": "workspace:*",
     "@notionhq/client": "^2.2.13",
     "zod": "^3.22.4",
     "@google/generative-ai": "^0.2.1"

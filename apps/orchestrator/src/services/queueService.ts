@@ -1,5 +1,5 @@
 import { Task } from '../types/Task';
-import { logger } from '../utils/logger';
+import { logger } from '@sugarstudio/utils';
 
 // This is a very basic in-memory queue for demonstration purposes.
 // In a production environment, you would use a robust message queue like RabbitMQ, Kafka, or a cloud-managed service.

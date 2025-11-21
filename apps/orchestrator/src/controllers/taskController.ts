@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { logger } from '../utils/logger';
+import { logger } from '@sugarstudio/utils';
 import { Task } from '../types/Task';
 import { enqueueTask } from '../services/queueService';
 import { generateSOP as generateSOPService } from '../services/sopsService';

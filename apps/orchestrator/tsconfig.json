@@ -1,5 +1,5 @@
 {
-  "extends": "../../packages/config/tsconfig/base.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
@@ -8,6 +8,12 @@
       "@/*": ["./src/*"]
     }
   },
+  "references": [
+    { "path": "../../packages/foundation" },
+    { "path": "../../packages/utils" },
+    { "path": "../../packages/supabase-client" }
+  ],
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
+

@@ -1,33 +1,29 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.startServer = void 0;
-var express_1 = __importDefault(require("express"));
-var cors_1 = __importDefault(require("cors"));
-var logger_1 = require("./utils/logger");
-var env_1 = require("./utils/env");
+import express from 'express';
+import cors from 'cors';
+import { logger } from '@sugarstudio/utils';
+import { PORT } from './utils/env';
 // Import routes
-var health_1 = __importDefault(require("./routes/health"));
-var tasks_1 = __importDefault(require("./routes/tasks"));
-var logs_1 = __importDefault(require("./routes/logs"));
-var app = (0, express_1.default)();
+import healthRoutes from './routes/health';
+import taskRoutes from './routes/tasks';
+import logRoutes from './routes/logs';
+import { startAIJobWorker } from "./workers/aiJobWorker";
+const app = express();
+// Start the AI Job Worker when the server bootstraps
+startAIJobWorker();
 // Middleware
-app.use((0, cors_1.default)());
-app.use(express_1.default.json());
+app.use(cors());
+app.use(express.json());
 // Routes
-app.use('/health', health_1.default);
-app.use('/tasks', tasks_1.default);
-app.use('/logs', logs_1.default);
+app.use('/health', healthRoutes);
+app.use('/tasks', taskRoutes);
+app.use('/logs', logRoutes);
 // Error handling middleware
-app.use(function (err, req, res, next) {
-    logger_1.logger.error("Unhandled error: ".concat(err.message), err.stack);
+app.use((err, req, res, next) => {
+    logger.error(`Unhandled error: ${err.message}`, err.stack);
     res.status(500).send('Something broke!');
 });
-var startServer = function () {
-    app.listen(env_1.PORT, function () {
-        logger_1.logger.info("Orchestrator server listening on port ".concat(env_1.PORT));
+export const startServer = () => {
+    app.listen(PORT, () => {
+        logger.info(`Orchestrator server listening on port ${PORT}`);
     });
 };
-exports.startServer = startServer;

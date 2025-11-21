@@ -1,5 +1,3 @@
-import { Task } from './Task'; // Assuming Task type is defined elsewhere or will be moved here
-
 export enum WorkflowStatus {
   PENDING = 'PENDING',
   IN_PROGRESS = 'IN_PROGRESS',

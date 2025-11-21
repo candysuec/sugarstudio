@@ -4,15 +4,15 @@ import { serverLogger } from '../logging/logger.server'; // Use server logger fo
 
 interface FetchOptions extends RequestInit {
   params?: Record<string, string | number | boolean>;
-  body?: Record<string, any>;
   expectedStatus?: number;
 }
 
 export async function safeFetch<T>(
   url: string,
-  options: FetchOptions = {}
+  options: Omit<FetchOptions, 'body'> = {},
+  requestBody?: Record<string, any>
 ): Promise<T> {
-  const { params, body, expectedStatus = 200, headers, ...rest } = options;
+  const { params, expectedStatus = 200, headers, ...rest } = options;
 
   let requestUrl = new URL(url);
   if (params) {
@@ -26,11 +26,16 @@ export async function safeFetch<T>(
     'Accept': 'application/json',
   };
 
-  const response = await fetch(requestUrl.toString(), {
+  const fetchOptions: RequestInit = {
     ...rest,
     headers: { ...defaultHeaders, ...headers },
-    body: body ? JSON.stringify(body) : rest.body,
-  });
+  };
+
+  if (requestBody) {
+    fetchOptions.body = JSON.stringify(requestBody);
+  }
+
+  const response = await fetch(requestUrl.toString(), fetchOptions);
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ message: response.statusText }));

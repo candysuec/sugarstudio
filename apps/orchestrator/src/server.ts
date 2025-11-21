@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { logger } from './utils/logger';
+import { logger } from '@sugarstudio/utils';
 import { PORT } from './utils/env';
 
 // Import routes

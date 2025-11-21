@@ -2,7 +2,7 @@ import cron from 'node-cron';
 import { logger } from '@sugarstudio/utils';
 import { enqueueTask } from '../services/queueService';
 import { Task } from '../types/Task';
-import { generateId } from '@sugarstudio/utils';
+import { generateUniqueId } from "foundation";
 
 export const startCronJobs = () => {
   logger.info('Starting cron jobs...');
@@ -11,7 +11,7 @@ export const startCronJobs = () => {
   cron.schedule('* * * * *', async () => {
     logger.info('Running scheduled task: Minute heartbeat');
     const heartbeatTask: Task = {
-      id: generateId('heartbeat'),
+      id: generateUniqueId('heartbeat'),
       type: 'MONITOR_LOGS',
       payload: { source: 'Orchestrator Heartbeat' },
       createdAt: new Date().toISOString(),
@@ -23,7 +23,7 @@ export const startCronJobs = () => {
   cron.schedule('0 0 * * *', async () => { // Every day at midnight
     logger.info('Running scheduled task: Daily maintenance');
     const maintenanceTask: Task = {
-      id: generateId('maintenance'),
+      id: generateUniqueId('maintenance'),
       type: 'RUN_MAINTENANCE',
       payload: { maintenanceType: 'Daily Cleanup' },
       createdAt: new Date().toISOString(),

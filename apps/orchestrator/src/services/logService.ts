@@ -1,5 +1,7 @@
-import { logger } from "../utils/logger";
-import { supabase } from "../utils/supabaseClient";
+import { logger } from "@sugarstudio/utils";
+import { getSupabaseClient } from "@sugarstudio/supabase-client";
+
+const supabase = getSupabaseClient("server");
 
 export async function writeLogToFile(message: string) {
   try {
@@ -13,7 +15,7 @@ export class LogService {
   static async insertLog(entry: any) {
     logger.info("LogService: Attempting to insert log into Supabase...");
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseServerClient
       .from("orchestrator_logs")
       .insert(entry);
 
