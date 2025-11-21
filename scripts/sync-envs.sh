@@ -18,12 +18,11 @@ fi
 
 echo "Syncing environment variables from .env.shared..."
 
-for APP in "${APPS[ @]}"; do
+for APP in "${APPS[@]}"; do
   APP_ENV="$ROOT_DIR/$APP/.env.local"
   echo "→ $APP"
 
   [[ -f "$APP_ENV" ]] || touch "$APP_ENV"
-
   cp "$APP_ENV" "$APP_ENV.bak"
 
   while IFS= read -r line || [[ -n "$line" ]]; do
@@ -32,7 +31,7 @@ for APP in "${APPS[ @]}"; do
     key="${line%%=*}"
 
     if ! grep -qE "^${key}=" "$APP_ENV"; then
-      echo "$line" >> "$APP_ENV"
+      printf "%s\n" "$line" >> "$APP_ENV"
     fi
   done < "$SHARED_ENV"
 
