@@ -11,7 +11,9 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const createSupabaseClient = () => {
   if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Supabase URL and/or Anon Key are not set. Please check your environment variables.');
+    throw new Error(
+      'Supabase URL and/or Anon Key are not set. Please check your environment variables.',
+    );
   }
   return createClient(supabaseUrl, supabaseAnonKey);
 };

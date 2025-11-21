@@ -50,7 +50,7 @@ export const costTracker = {
     model: string,
     promptTokens: number,
     completionTokens: number,
-    jobType?: string
+    jobType?: string,
   ): void => {
     const totalTokens = promptTokens + completionTokens;
     const costEstimate = calculateCost(model, promptTokens, completionTokens);
@@ -65,7 +65,9 @@ export const costTracker = {
       jobType,
     };
     usageRecords.push(record);
-    logger.info(`Gemini Usage Recorded: Model=${model}, Tokens=${totalTokens}, Cost=$${costEstimate.toFixed(5)}, JobType=${jobType || 'N/A'}`);
+    logger.info(
+      `Gemini Usage Recorded: Model=${model}, Tokens=${totalTokens}, Cost=$${costEstimate.toFixed(5)}, JobType=${jobType || 'N/A'}`,
+    );
     // TODO: In a production environment, this would be saved to a database table (e.g., api_usage_logs)
   },
 
@@ -75,7 +77,9 @@ export const costTracker = {
       ...analytics,
     };
     analyticsRecords.push(record);
-    logger.info(`Gemini Analytics Recorded: Model=${analytics.model}, JobType=${analytics.jobType || 'N/A'}, Duration=${analytics.durationMs || 'N/A'}ms`);
+    logger.info(
+      `Gemini Analytics Recorded: Model=${analytics.model}, JobType=${analytics.jobType || 'N/A'}, Duration=${analytics.durationMs || 'N/A'}ms`,
+    );
     // TODO: In a production environment, this would be saved to a database table (e.g., gemini_analytics_logs)
   },
 

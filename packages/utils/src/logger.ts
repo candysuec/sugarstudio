@@ -19,16 +19,10 @@ const logFormat = printf((info: TransformableInfo) => {
 
 export const logger = winston.createLogger({
   level: 'info',
-  format: combine(
-    timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    logFormat
-  ),
+  format: combine(timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), logFormat),
   transports: [
     new winston.transports.Console({
-      format: combine(
-        colorize(),
-        logFormat
-      ),
+      format: combine(colorize(), logFormat),
     }),
     new winston.transports.File({ filename: path.join(logDir, 'orchestrator.log'), level: 'info' }),
     new winston.transports.File({ filename: path.join(logDir, 'error.log'), level: 'error' }),

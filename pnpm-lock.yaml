@@ -326,40 +326,15 @@ importers:
 
   packages/ui:
     dependencies:
-      class-variance-authority:
-        specifier: ^0.7.0
-        version: 0.7.1
-      clsx:
-        specifier: ^2.0.0
-        version: 2.1.1
-      lucide-react:
-        specifier: ^0.292.0
-        version: 0.292.0(react@18.3.1)
       next:
-        specifier: ^14.0.4
+        specifier: '>=13.0.0'
         version: 14.0.4(react-dom@18.3.1)(react@18.3.1)
       react:
-        specifier: ^18.2.0
+        specifier: '>=18.0.0'
         version: 18.3.1
       react-dom:
-        specifier: ^18.2.0
+        specifier: '>=18.0.0'
         version: 18.3.1(react@18.3.1)
-      tailwind-merge:
-        specifier: ^2.0.0
-        version: 2.6.0
-      tailwindcss:
-        specifier: ^3.3.0
-        version: 3.4.18
-    devDependencies:
-      '@types/react':
-        specifier: ^18.2.37
-        version: 18.3.27
-      '@types/react-dom':
-        specifier: ^18.2.15
-        version: 18.3.7(@types/react@18.3.27)
-      typescript:
-        specifier: ^5.2.2
-        version: 5.9.3
 
   packages/utils:
     dependencies:
@@ -3588,14 +3563,6 @@ packages:
 
   /lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
-
-  /lucide-react@0.292.0(react@18.3.1):
-    resolution: {integrity: sha512-rRgUkpEHWpa5VCT66YscInCQmQuPCB1RFRzkkxMxg4b+jaL0V12E3riWWR2Sh5OIiUhCwGW/ZExuEO4Az32E6Q==}
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.3.1
-    dev: false
 
   /lucide-react@0.554.0(react@18.3.1):
     resolution: {integrity: sha512-St+z29uthEJVx0Is7ellNkgTEhaeSoA42I7JjOCBCrc5X6LYMGSv0P/2uS5HDLTExP5tpiqRD2PyUEOS6s9UXA==}

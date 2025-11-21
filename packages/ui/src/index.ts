@@ -1,5 +1,4 @@
 export * from './components/BlogCard';
-export * from './components/BrandBookExporter';
 export * from './components/SectionHeader';
 export * from './components/CTA';
 export * from './components/Header';

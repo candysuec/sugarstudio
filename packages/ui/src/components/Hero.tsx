@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Button } from 'ui'; // Assuming 'ui' package is correctly configured
+import { Button } from ' @sugarstudio/ui'; // Assuming 'ui' package is correctly configured
 
 export function Hero() {
   return (
