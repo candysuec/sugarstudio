@@ -8,14 +8,10 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-            "ui": ["../../packages/ui/index.tsx"],
-            "foundation/*": ["../../packages/foundation/*"],
-            "@sugarstudio/ui": ["../../packages/ui/index.tsx"],
-            "@sugarstudio/foundation/*": ["../../packages/foundation/*"]
-          },
+      "@/*": ["./*"],
+      "@/components/*": ["components/*"],
+      "@/app/*": ["app/*"]
+    },
     "lib": [
       "dom",
       "dom.iterable",
