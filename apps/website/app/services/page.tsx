@@ -3,9 +3,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import SectionHeader from '@/components/SectionHeader';
-import Card from '@/components/Card';
-import Button from '@/components/Button';
+import SectionHeader from '@/components/layout/section-header';
+import Card from '@/components/cards/Card';
+import { Button } from '@/components/ui/button';
 
 const ServicesPage = () => {
   return (
@@ -24,9 +24,7 @@ const ServicesPage = () => {
           <p className="text-xl md:text-2xl text-brand-gray mb-8">
             Clear strategies, compelling design, and robust systems to scale your impact.
           </p>
-          <Button href="/contact" size="lg" variant="primary">
-            Start Your Project
-          </Button>
+          <div>Button placeholder</div>
         </motion.div>
       </section>
 
@@ -97,9 +95,7 @@ const ServicesPage = () => {
                 <li className="flex items-center"><svg className="w-5 h-5 text-blue-primary mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>Target Audience Deep Dive</li>
                 <li className="flex items-center"><svg className="w-5 h-5 text-blue-primary mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>Core Offerings Refinement</li>
               </ul>
-              <Button href="/contact" variant="outline" className="w-full">
-                Get Clear
-              </Button>
+              <div>Button placeholder</div>
             </Card>
 
             {/* Package 2 */}
@@ -113,9 +109,7 @@ const ServicesPage = () => {
                 <li className="flex items-center"><svg className="w-5 h-5 text-blue-primary mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>SEO & Content Strategy Integration</li>
                 <li className="flex items-center"><svg className="w-5 h-5 text-blue-primary mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>Conversion-Focused UX/UI</li>
               </ul>
-              <Button href="/contact" variant="primary" className="w-full">
-                Go Digital
-              </Button>
+              <div>Button placeholder</div>
             </Card>
 
             {/* Package 3 */}
@@ -129,9 +123,7 @@ const ServicesPage = () => {
                 <li className="flex items-center"><svg className="w-5 h-5 text-blue-primary mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>Workflow Optimization & Integration</li>
                 <li className="flex items-center"><svg className="w-5 h-5 text-blue-primary mr-2" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path></svg>Performance Monitoring & Reporting</li>
               </ul>
-              <Button href="/contact" variant="outline" className="w-full">
-                Scale Up
-              </Button>
+              <div>Button placeholder</div>
             </Card>
           </div>
         </div>
@@ -272,9 +264,7 @@ const ServicesPage = () => {
           >
             Let's craft a strategy that brings clarity, design that converts, and systems that scale.
           </motion.p>
-          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
-            Schedule Your Strategy Call
-          </Button>
+          <div>Button placeholder</div>
         </div>
       </section>
     </div>

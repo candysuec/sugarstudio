@@ -9,8 +9,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@/components/*": ["components/*"],
-      "@/app/*": ["app/*"]
+      "foundation/*": ["../../packages/foundation/*"]
     },
     "lib": [
       "dom",

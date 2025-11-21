@@ -3,8 +3,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SectionHeader } from '@sugarstudio/ui';
-import { Button } from '@sugarstudio/ui';
+// import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 // Placeholder for fetching blog post data based on slug
@@ -160,14 +159,9 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
       {/* Related Posts / Final CTA */}
       <section className="py-20 bg-brand-black px-4 text-center">
         <div className="container mx-auto">
-          <SectionHeader
-            title="Continue Your Learning Journey"
-            subtitle="Explore more insights to clarify your message and scale your business."
-          />
+<div>SectionHeader placeholder</div>
           <div className="mt-12">
-            <Button href="/blog" size="lg" variant="primary">
-              View All Articles
-            </Button>
+<div>Button placeholder</div>
           </div>
         </div>
       </section>

@@ -3,9 +3,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import Button from '@/components/Button';
-import SectionHeader from '@/components/SectionHeader';
-import Card from '@/components/Card';
+import { Button } from '@/components/ui/button';
+import SectionHeader from '@/components/layout/section-header';
+import Card from '@/components/cards/Card';
 
 export default function HomePage() {
   return (
@@ -27,12 +27,8 @@ export default function HomePage() {
             structure your vision, and build systems that scale.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <Button href="/contact" size="lg" variant="primary">
-              Work With Me
-            </Button>
-            <Button href="/contact" size="lg" variant="outline">
-              Schedule a Strategy Call
-            </Button>
+<div>Button placeholder</div>
+<div>Button placeholder</div>
           </div>
         </motion.div>
         {/* Background elements for visual interest */}
@@ -171,9 +167,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center mt-12">
-            <Button href="/services" size="lg" variant="outline">
-              Explore All Services
-            </Button>
+<div>Button placeholder</div>
           </div>
         </div>
       </section>
@@ -189,9 +183,7 @@ export default function HomePage() {
             (Placeholder for a dynamic portfolio grid. Coming soon!)
           </p>
           <div className="mt-12">
-            <Button href="/portfolio" size="lg" variant="primary">
-              View Case Studies
-            </Button>
+<div>Button placeholder</div>
           </div>
         </div>
       </section>
@@ -207,9 +199,7 @@ export default function HomePage() {
             (Placeholder for a dynamic testimonials carousel/grid. Coming soon!)
           </p>
           <div className="mt-12">
-            <Button href="/contact" size="lg" variant="outline">
-              Ready for Your Success Story?
-            </Button>
+<div>Button placeholder</div>
           </div>
         </div>
       </section>
@@ -225,9 +215,7 @@ export default function HomePage() {
             (Placeholder for a blog post preview grid. Coming soon!)
           </p>
           <div className="mt-12">
-            <Button href="/blog" size="lg" variant="primary">
-              Read the Blog
-            </Button>
+<div>Button placeholder</div>
           </div>
         </div>
       </section>
@@ -254,9 +242,7 @@ export default function HomePage() {
             Stop feeling stuck and start building the clear, scalable, and impactful business you envision.
             Your transformation begins now.
           </motion.p>
-          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
-            Start Your Transformation
-          </Button>
+<div>Button placeholder</div>
         </div>
       </section>
     </div>

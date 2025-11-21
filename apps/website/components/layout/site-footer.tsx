@@ -1,7 +1,11 @@
-export default function SiteFooter() {
+"use client";
+
+export default function Footer() {
   return (
-    <footer className="w-full py-6 border-t border-gray-200 text-center">
-      <p className="text-sm text-gray-500">© {new Date().getFullYear()} SugarStudio</p>
+    <footer className="w-full py-6 border-t mt-10">
+      <div className="max-w-6xl mx-auto px-4 text-sm text-gray-500">
+        © {new Date().getFullYear()} SugarStudio — All rights reserved.
+      </div>
     </footer>
   );
 }

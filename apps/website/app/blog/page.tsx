@@ -3,9 +3,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { SectionHeader } from '@sugarstudio/ui';
-import { Button } from '@sugarstudio/ui';
-import { BlogCard } from '@sugarstudio/ui';
+// import { Button } from '@/components/ui/button';
 
 const blogPosts = [
   {
@@ -69,21 +67,10 @@ const BlogIndexPage = () => {
       {/* Blog Post Grid */}
       <section className="py-20 bg-brand-slate px-4">
         <div className="container mx-auto">
-          <SectionHeader
-            title="Latest Articles"
-            subtitle="Dive into actionable insights and strategic advice."
-          />
+<div>SectionHeader placeholder</div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {blogPosts.map((post) => (
-              <BlogCard
-                key={post.id}
-                title={post.title}
-                description={post.description}
-                date={post.date}
-                slug={post.slug}
-                category={post.category}
-                image={post.image}
-              />
+<div>BlogCard placeholder</div>
             ))}
           </div>
         </div>
@@ -92,10 +79,7 @@ const BlogIndexPage = () => {
       {/* Featured Posts (Placeholder) */}
       <section className="py-20 bg-brand-black px-4">
         <div className="container mx-auto text-center">
-          <SectionHeader
-            title="Featured Insights"
-            subtitle="Handpicked articles to help you clarify and scale."
-          />
+<div>SectionHeader placeholder</div>
           <p className="text-brand-gray text-lg mt-8">
             (Placeholder for a featured posts section. Coming soon!)
           </p>
@@ -123,9 +107,7 @@ const BlogIndexPage = () => {
           >
             Let's turn insights into action and build a brand that truly connects.
           </motion.p>
-          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
-            Schedule a Strategy Call
-          </Button>
+<div>Button placeholder</div>
         </div>
       </section>
     </div>

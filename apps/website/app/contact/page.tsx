@@ -2,12 +2,13 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SectionHeader } from '@sugarstudio/ui';
-import { Button } from '@sugarstudio/ui';
-import { Input } from '@sugarstudio/ui';
-import { Textarea } from '@sugarstudio/ui';
-import { Label } from '@sugarstudio/ui';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@sugarstudio/ui';
+
+// import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+// import { Button } from '@/components/ui/button';
+// import { Input } from '@/components/ui/input';
+// import { Label } from '@/components/ui/label';
+// import { Textarea } from '@/components/ui/textarea';
+
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -103,47 +104,18 @@ const ContactPage = () => {
             <h2 className="text-3xl font-bold text-silver mb-6">Send Me a Message</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <Label htmlFor="name" className="text-silver mb-2 block">Name</Label>
-                <Input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Your Name"
-                  className="bg-brand-slate border-brand-gray text-silver focus:ring-blue-primary focus:border-blue-primary"
-                  required
-                />
+                <div>Label placeholder</div>
+<div>Input placeholder</div>
               </div>
               <div>
-                <Label htmlFor="email" className="text-silver mb-2 block">Email</Label>
-                <Input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your@email.com"
-                  className="bg-brand-slate border-brand-gray text-silver focus:ring-blue-primary focus:border-blue-primary"
-                  required
-                />
+                <div>Label placeholder</div>
+                <div>Input placeholder</div>
               </div>
               <div>
-                <Label htmlFor="message" className="text-silver mb-2 block">Message</Label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell me about your project or challenge..."
-                  rows={6}
-                  className="bg-brand-slate border-brand-gray text-silver focus:ring-blue-primary focus:border-blue-primary"
-                  required
-                />
+                <div>Label placeholder</div>
+                <div>Textarea placeholder</div>
               </div>
-              <Button type="submit" size="lg" variant="primary" className="w-full">
-                Send Message
-              </Button>
+<div>Button placeholder</div>
             </form>
           </motion.div>
 
@@ -159,9 +131,7 @@ const ContactPage = () => {
             <p className="text-xl text-brand-gray mb-8">
               Let's dive deep into your vision and challenges during a free, no-obligation strategy call.
             </p>
-            <Button href="https://calendly.com/your-booking-link" target="_blank" size="lg" variant="outline">
-              Book a Strategy Call
-            </Button>
+<div>Button placeholder</div>
             <p className="text-brand-gray text-sm mt-4">
               (Link to your Calendly or booking system)
             </p>
@@ -172,10 +142,7 @@ const ContactPage = () => {
       {/* FAQ Section */}
       <section className="py-20 bg-brand-black px-4">
         <div className="container mx-auto max-w-3xl">
-          <SectionHeader
-            title="Frequently Asked Questions"
-            subtitle="Find quick answers to common questions about my services and approach."
-          />
+          <div>SectionHeader placeholder</div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -183,18 +150,7 @@ const ContactPage = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-12"
           >
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem value={`item-${index}`} key={index} className="border-b border-brand-slate">
-                  <AccordionTrigger className="text-silver hover:no-underline text-lg font-semibold py-4">
-                    {faq.question}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-brand-gray pb-4">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+<div>Accordion placeholder</div>
           </motion.div>
         </div>
       </section>
@@ -220,9 +176,7 @@ const ContactPage = () => {
           >
             Stop feeling overwhelmed and start building a business that truly reflects your vision and delivers consistent results.
           </motion.p>
-          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
-            Let's Make It Happen
-          </Button>
+<div>Button placeholder</div>
         </div>
       </section>
     </div>

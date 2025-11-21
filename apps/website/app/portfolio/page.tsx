@@ -3,9 +3,9 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import SectionHeader from '@/components/SectionHeader';
-import Card from '@/components/Card';
-import Button from '@/components/Button';
+import SectionHeader from '@/components/layout/section-header';
+import Card from '@/components/cards/Card';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
 const caseStudies = [
@@ -104,9 +104,7 @@ const PortfolioPage = () => {
                   </div>
                 </div>
                 <Link href={`/portfolio/${study.id}`} passHref>
-                  <Button variant="outline" className="mt-8 w-full">
-                    View Full Case Study
-                  </Button>
+                  <div>Button placeholder</div>
                 </Link>
               </Card>
             ))}
@@ -135,9 +133,7 @@ const PortfolioPage = () => {
           >
             Your success story is waiting to be written. Let's collaborate and achieve remarkable results together.
           </motion.p>
-          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
-            Let's Discuss Your Project
-          </Button>
+          <div>Button placeholder</div>
         </div>
       </section>
     </div>

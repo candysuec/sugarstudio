@@ -1,7 +1,9 @@
-export default function SiteHeader() {
+"use client";
+
+export default function Header() {
   return (
-    <header className="w-full py-6 border-b border-gray-200">
-      <div className="container mx-auto flex justify-between items-center">
+    <header className="w-full py-6 border-b">
+      <div className="max-w-6xl mx-auto px-4">
         <h1 className="text-xl font-bold">SugarStudio</h1>
       </div>
     </header>
