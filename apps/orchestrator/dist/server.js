@@ -1,29 +1,36 @@
-import express from 'express';
-import cors from 'cors';
-import { logger } from '@sugarstudio/utils';
-import { PORT } from './utils/env';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.startServer = void 0;
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const utils_1 = require("@sugarstudio/utils");
+const env_1 = require("./utils/env");
 // Import routes
-import healthRoutes from './routes/health';
-import taskRoutes from './routes/tasks';
-import logRoutes from './routes/logs';
-import { startAIJobWorker } from "./workers/aiJobWorker";
-const app = express();
+const health_1 = __importDefault(require("./routes/health"));
+const tasks_1 = __importDefault(require("./routes/tasks"));
+const logs_1 = __importDefault(require("./routes/logs"));
+const aiJobWorker_1 = require("./workers/aiJobWorker");
+const app = (0, express_1.default)();
 // Start the AI Job Worker when the server bootstraps
-startAIJobWorker();
+(0, aiJobWorker_1.startAIJobWorker)();
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use((0, cors_1.default)());
+app.use(express_1.default.json());
 // Routes
-app.use('/health', healthRoutes);
-app.use('/tasks', taskRoutes);
-app.use('/logs', logRoutes);
+app.use('/health', health_1.default);
+app.use('/tasks', tasks_1.default);
+app.use('/logs', logs_1.default);
 // Error handling middleware
 app.use((err, req, res, next) => {
-    logger.error(`Unhandled error: ${err.message}`, err.stack);
+    utils_1.logger.error(`Unhandled error: ${err.message}`, err.stack);
     res.status(500).send('Something broke!');
 });
-export const startServer = () => {
-    app.listen(PORT, () => {
-        logger.info(`Orchestrator server listening on port ${PORT}`);
+const startServer = () => {
+    app.listen(env_1.PORT, () => {
+        utils_1.logger.info(`Orchestrator server listening on port ${env_1.PORT}`);
     });
 };
+exports.startServer = startServer;

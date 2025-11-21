@@ -1,19 +1,12 @@
 {
-  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "strict": true,
     "outDir": "dist",
     "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  },
-  "references": [
-    { "path": "../../packages/foundation" },
-    { "path": "../../packages/utils" },
-    { "path": "../../packages/supabase-client" }
-  ],
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+    "esModuleInterop": true
+  }
 }
-

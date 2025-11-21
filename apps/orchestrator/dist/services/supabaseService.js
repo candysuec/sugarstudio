@@ -1,30 +1,35 @@
-import { supabaseServerClient } from "@sugarstudio/supabase-client";
-import { logger } from "@sugarstudio/utils";
-export const logToSupabase = async (log) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getTasksFromSupabase = exports.logToSupabase = void 0;
+const supabase_client_1 = require("@sugarstudio/supabase-client");
+const utils_1 = require("@sugarstudio/utils");
+const logToSupabase = async (log) => {
     try {
-        const { error } = await supabaseServerClient.from("orchestrator_logs").insert([log]);
+        const { error } = await supabase_client_1.supabaseServerClient.from("orchestrator_logs").insert([log]);
         if (error) {
-            logger.error("Error logging to Supabase:", error.message);
+            utils_1.logger.error("Error logging to Supabase:", error.message);
         }
         else {
-            logger.info("Log successfully written to Supabase.");
+            utils_1.logger.info("Log successfully written to Supabase.");
         }
     }
     catch (error) {
-        logger.error("Supabase logging failed:", error.message);
+        utils_1.logger.error("Supabase logging failed:", error.message);
     }
 };
-export const getTasksFromSupabase = async () => {
+exports.logToSupabase = logToSupabase;
+const getTasksFromSupabase = async () => {
     try {
-        const { data, error } = await supabaseServerClient.from("tasks").select("*");
+        const { data, error } = await supabase_client_1.supabaseServerClient.from("tasks").select("*");
         if (error) {
-            logger.error("Error fetching tasks from Supabase:", error.message);
+            utils_1.logger.error("Error fetching tasks from Supabase:", error.message);
             return [];
         }
         return data;
     }
     catch (error) {
-        logger.error("Supabase task fetching failed:", error.message);
+        utils_1.logger.error("Supabase task fetching failed:", error.message);
         return [];
     }
 };
+exports.getTasksFromSupabase = getTasksFromSupabase;

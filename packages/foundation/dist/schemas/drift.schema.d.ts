@@ -1,0 +1,40 @@
+import { z } from 'zod';
+import { DriftCategory, DriftSeverity } from '../types/drift';
+export declare const DriftEventSchema: z.ZodObject<{
+    id: z.ZodString;
+    brandId: z.ZodString;
+    timestamp: z.ZodEffects<z.ZodDate, Date, unknown>;
+    category: z.ZodNativeEnum<typeof DriftCategory>;
+    severity: z.ZodNativeEnum<typeof DriftSeverity>;
+    description: z.ZodString;
+    detectedBy: z.ZodEnum<["AI", "Manual", "System"]>;
+    metadata: z.ZodOptional<z.ZodRecord<z.ZodString, z.ZodAny>>;
+    resolved: z.ZodDefault<z.ZodBoolean>;
+    resolvedAt: z.ZodOptional<z.ZodEffects<z.ZodDate, Date, unknown>>;
+    resolvedBy: z.ZodOptional<z.ZodString>;
+}, "strip", z.ZodTypeAny, {
+    timestamp: Date;
+    id: string;
+    brandId: string;
+    category: DriftCategory;
+    severity: DriftSeverity;
+    description: string;
+    detectedBy: "System" | "AI" | "Manual";
+    resolved: boolean;
+    metadata?: Record<string, any> | undefined;
+    resolvedAt?: Date | undefined;
+    resolvedBy?: string | undefined;
+}, {
+    id: string;
+    brandId: string;
+    category: DriftCategory;
+    severity: DriftSeverity;
+    description: string;
+    detectedBy: "System" | "AI" | "Manual";
+    timestamp?: unknown;
+    metadata?: Record<string, any> | undefined;
+    resolved?: boolean | undefined;
+    resolvedAt?: unknown;
+    resolvedBy?: string | undefined;
+}>;
+export type DriftEventSchemaType = z.infer<typeof DriftEventSchema>;

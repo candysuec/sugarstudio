@@ -1,0 +1,7 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.supabase = void 0;
+var supabase_js_1 = require("@supabase/supabase-js");
+console.log("DEBUG: Initializing Supabase with URL:", process.env.SUPABASE_URL);
+console.log("DEBUG: Using Key (service role):");
+exports.supabase = (0, supabase_js_1.createClient)(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);

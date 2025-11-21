@@ -1,53 +1,59 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# This script syncs environment variables from .env.shared to app-specific .env.local files.
-# It ensures that app-specific variables in .env.local override shared variables,
-# and performs variable expansion. Each .env.local file becomes self-contained.
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SHARED_ENV="$ROOT_DIR/.env.shared"
 
-# Define the path to the shared .env file
-SHARED_ENV=".env.shared"
+APPS=(
+  "apps/website"
+  "apps/knisoci"
+  "apps/candyland"
+  "apps/orchestrator"
+)
 
-# Define the applications that need .env.local files
-APPS=("website" "knisoci" "candyland" "orchestrator")
-
-echo "Syncing environment variables from $SHARED_ENV to app-specific .env.local files..."
-
-# Check if the shared .env file exists
-if [ ! -f "$SHARED_ENV" ]; then
-  echo "Error: $SHARED_ENV not found. Please create it."
+if [[ ! -f "$SHARED_ENV" ]]; then
+  echo "❌ .env.shared not found at $SHARED_ENV"
   exit 1
 fi
 
-# Loop through each app
-for APP in "${APPS[@]}"; do
-  APP_DIR="apps/$APP"
-  APP_ENV_LOCAL="$APP_DIR/.env.local"
-  APP_ENV_TEMP="$APP_DIR/.env.local.tmp"
+echo "Syncing environment variables from .env.shared to app-specific .env.local files..."
 
-  echo "Processing $APP_DIR..."
+for APP in "${APPS[ @]}"; do
+  APP_ENV="$ROOT_DIR/$APP/.env.local"
+  APP_NAME="$(basename "$APP")"
 
-  # Start a subshell to manage environment variables for this app
-  (
-    # Load shared variables first
-    set -a # Automatically export all variables
-    source "$SHARED_ENV"
-    set +a # Stop automatically exporting
+  echo "Processing $APP..."
 
+  # Ensure .env.local exists
+  if [[ ! -f "$APP_ENV" ]]; then
+    touch "$APP_ENV"
+  fi
 
-    # Write all currently active environment variables to a temporary file
-    # Filter out shell-internal variables and functions, and only include relevant ones
-    # Also, ensure variables are expanded
-    env | grep -E '^(SUPABASE_|NEXTAUTH_|GOOGLE_|OPENAI_|GEMINI_|NOTION_|DATABASE_|LOG_|ENVIRONMENT_|ENV_MODE_|APP_BASE_URL|PORT|NEXT_PUBLIC_)' | while IFS='=' read -r key value; do
-      # Ensure the value is properly quoted if it contains spaces or special characters
-      echo "${key}=\"${value}\"" >> "$APP_ENV_TEMP"
-    done
+  # Keep a backup
+  cp "$APP_ENV" "$APP_ENV.bak"
 
-  ) # End of subshell
+  # Merge: for each VAR=value in .env.shared, add to .env.local only if VAR is missing
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    # Skip comments and blank lines
+    if [[ -z "$line" ]] || [[ "$line" =~ ^[[:space:]]*# ]]; then
+      continue
+    fi
 
-  # Replace the original .env.local with the merged and expanded content
-  mv "$APP_ENV_TEMP" "$APP_ENV_LOCAL"
-  echo "Synced environment variables for $APP_DIR"
+    # Extract VAR name
+    var_name="${line%%=*}"
 
+    # Skip broken lines
+    if [[ -z "$var_name" ]]; then
+      continue
+    fi
+
+    # If variable is not already defined in app's .env.local, append it
+    if ! grep -qE "^${var_name}=" "$APP_ENV"; then
+      echo "$line" >> "$APP_ENV"
+    fi
+  done < "$SHARED_ENV"
+
+  echo "Synced environment variables for $APP"
 done
 
 echo "Environment variable sync complete."
