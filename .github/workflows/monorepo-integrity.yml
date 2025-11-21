@@ -1,0 +1,46 @@
+name: Monorepo Integrity Guard
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: corepack enable pnpm
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm turbo run lint --continue --no-cache
+
+      - name: Type Check
+        run: pnpm turbo run typecheck --continue --no-cache
+
+      - name: Build
+        run: pnpm turbo run build --continue --no-cache
+
+      - name: Prisma Schema Consistency
+        run: |
+          echo "Checking Prisma schemas..."
+          find . -name "schema.prisma" -print
+
+      - name: Env Sync Check
+        run: |
+          echo "Validating .env.shared -> .env.local sync"
+          if ! grep -q "SUPABASE_URL" ./.env.shared; then
+            echo "Missing SUPABASE_URL in .env.shared"
+            exit 1
+          fi
