@@ -10,17 +10,17 @@ const openAIClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 // 2. In-memory status tracking object
 let aiStatus = {
   openai: {
-    status: "OK",
+    status: 'OK',
     lastUsed: null,
-    lastError: null
+    lastError: null,
   },
   gemini: {
-    status: "OK",
+    status: 'OK',
     lastUsed: null,
-    lastError: null
+    lastError: null,
   },
   timestamp: new Date().toISOString(),
-  environment: process.env.NODE_ENV || 'development'
+  environment: process.env.NODE_ENV || 'development',
 };
 
 // 3. The core function with failover logic
@@ -36,18 +36,18 @@ export async function runSmartAI(prompt) {
     const response = result.response.text();
 
     // Update status on success
-    aiStatus.gemini.status = "OK";
+    aiStatus.gemini.status = 'OK';
     aiStatus.gemini.lastUsed = timestamp;
     aiStatus.gemini.lastError = null;
 
     return { source: 'Gemini', response };
   } catch (geminiError) {
-    console.error("Gemini Error:", geminiError.message);
-    aiStatus.gemini.status = "Error";
+    console.error('Gemini Error:', geminiError.message);
+    aiStatus.gemini.status = 'Error';
     aiStatus.gemini.lastError = geminiError.message;
 
     // --- Fallback to OpenAI ---
-    console.log("Falling back to OpenAI...");
+    console.log('Falling back to OpenAI...');
     try {
       const completion = await openAIClient.chat.completions.create({
         messages: [{ role: 'user', content: prompt }],
@@ -56,18 +56,18 @@ export async function runSmartAI(prompt) {
       const response = completion.choices[0].message.content;
 
       // Update status on success
-      aiStatus.openai.status = "OK";
+      aiStatus.openai.status = 'OK';
       aiStatus.openai.lastUsed = timestamp;
       aiStatus.openai.lastError = null;
 
       return { source: 'OpenAI', response };
     } catch (openAIError) {
-      console.error("OpenAI Error:", openAIError.message);
-      aiStatus.openai.status = "Error";
+      console.error('OpenAI Error:', openAIError.message);
+      aiStatus.openai.status = 'Error';
       aiStatus.openai.lastError = openAIError.message;
 
       // Both have failed
-      return { source: 'None', response: "Both AI services are currently unavailable." };
+      return { source: 'None', response: 'Both AI services are currently unavailable.' };
     }
   }
 }

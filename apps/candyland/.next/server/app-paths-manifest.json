@@ -1,0 +1,9 @@
+{
+  "/_not-found": "app/_not-found.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/page": "app/page.js",
+  "/api/run-task/route": "app/api/run-task/route.js",
+  "/api/health/route": "app/api/health/route.js",
+  "/workflows/page": "app/workflows/page.js",
+  "/settings/page": "app/settings/page.js"
+}

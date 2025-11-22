@@ -1,21 +1,20 @@
-"use client";
-import { useState } from "react";
-import { 
-  DiscoveryWizard, 
-  MessagingMatrixGenerator, 
-  ContentPillarsGenerator, 
-  BrandBookExporter,
-  PostIdeasGenerator,
-  ColorPaletteGenerator,
-  ConsistencyChecker, // Re-import ConsistencyChecker
-  Tabs, // Import the new Tabs component
-  LogoGenerator, // Import the new LogoGenerator
-  CustomerProfilesGenerator, // Import new CustomerProfilesGenerator
-  BrandPositioningMapGenerator, // Import new BrandPositioningMapGenerator
-  MessagingGuideGenerator, // Import new MessagingGuideGenerator
-  TypographyGenerator // Import new TypographyGenerator
-} from "@sugarstudio/ui";
-
+'use client';
+import { useState } from 'react';
+// import {
+//   DiscoveryWizard,
+//   MessagingMatrixGenerator,
+//   ContentPillarsGenerator,
+//   BrandBookExporter,
+//   PostIdeasGenerator,
+//   ColorPaletteGenerator,
+//   ConsistencyChecker,
+//   Tabs,
+//   LogoGenerator,
+//   CustomerProfilesGenerator,
+//   BrandPositioningMapGenerator,
+//   MessagingGuideGenerator,
+//   TypographyGenerator
+// } from "@sugarstudio/ui";
 export default function OnboardingWorkflow() {
   const [step, setStep] = useState('wizard'); // 'wizard', 'customerProfiles', 'brandPositioningMap', 'matrix', 'pillars', 'exporter', 'dashboard'
   const [brandId, setBrandId] = useState<string | null>(null);
@@ -32,7 +31,7 @@ export default function OnboardingWorkflow() {
     console.log('Messaging Matrix complete.');
     setStep('pillars');
   };
-  
+
   const handlePillarsComplete = () => {
     console.log('Content Pillars complete.');
     setStep('customerProfiles');
@@ -56,60 +55,59 @@ export default function OnboardingWorkflow() {
   const renderStep = () => {
     switch (step) {
       case 'wizard':
-        return <DiscoveryWizard onComplete={handleWizardComplete} />;
+        return <div>DiscoveryWizard Placeholder</div>;
       case 'customerProfiles':
-        return <CustomerProfilesGenerator brandId={brandId!} onComplete={handleCustomerProfilesComplete} />;
+        return <div>CustomerProfilesGenerator Placeholder</div>;
       case 'brandPositioningMap':
-        return <BrandPositioningMapGenerator brandId={brandId!} onComplete={handleBrandPositioningMapComplete} />;
+        return <div>BrandPositioningMapGenerator Placeholder</div>;
       case 'matrix':
-        return <MessagingMatrixGenerator brandId={brandId!} onComplete={handleMatrixComplete} />;
+        return <div>MessagingMatrixGenerator Placeholder</div>;
       case 'pillars':
-        return <ContentPillarsGenerator brandId={brandId!} onComplete={handlePillarsComplete} />;
+        return <div>ContentPillarsGenerator Placeholder</div>;
       case 'exporter':
-        return <BrandBookExporter brandId={brandId!} brandName={brandName} onComplete={handleExportComplete} />;
-      case 'dashboard':
+        return <div>BrandBookExporter Placeholder</div>;
+      case 'dashboard': {
         const dashboardTabs = [
           {
             label: 'Logo Idea',
-            content: <LogoGenerator brandId={brandId!} />,
+            content: <div>LogoGenerator Placeholder</div>,
           },
           {
             label: 'Color Palette',
-            content: <ColorPaletteGenerator brandId={brandId!} />,
+            content: <div>ColorPaletteGenerator Placeholder</div>,
           },
           {
             label: 'Post Ideas',
-            content: <PostIdeasGenerator brandId={brandId!} />,
+            content: <div>PostIdeasGenerator Placeholder</div>,
           },
           {
             label: 'Consistency Checker',
-            content: <ConsistencyChecker brandId={brandId!} />,
+            content: <div>ConsistencyChecker Placeholder</div>,
           },
           {
             label: 'Messaging Guide',
-            content: <MessagingGuideGenerator brandId={brandId!} />,
+            content: <div>MessagingGuideGenerator Placeholder</div>,
           },
           {
             label: 'Typography',
-            content: <TypographyGenerator brandId={brandId!} />,
+            content: <div>TypographyGenerator Placeholder</div>,
           },
         ];
         return (
           <div className="space-y-8">
-            <h2 className="text-2xl font-bold text-center">Brand Dashboard</h2>
-            <Tabs tabs={dashboardTabs} />
+            <h2 className="text-center text-2xl font-bold">Brand Dashboard</h2>
+            <div>Tabs Placeholder</div>
           </div>
         );
+      }
       default:
         return <p className="p-4 text-red-500">An unexpected error occurred. Please try again.</p>;
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max_w_2xl">
-        {renderStep()}
-      </div>
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-4">
+      <div className="max_w_2xl w-full">{renderStep()}</div>
     </div>
   );
 }
