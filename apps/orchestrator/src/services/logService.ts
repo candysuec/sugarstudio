@@ -1,43 +1,42 @@
-import { logger } from "@sugarstudio/utils";
-import { getSupabaseClient } from "@sugarstudio/supabase-client";
+import { getSupabaseServiceClient } from "./supabaseService";
 
-const supabase = getSupabaseClient("server");
+export type LogLevel = "info" | "warn" | "error";
 
-export async function writeLogToFile(message: string) {
-  try {
-    logger.info(`[writeLogToFile] ${message}`);
-  } catch (err) {
-    logger.error("writeLogToFile failed:", err);
-  }
+export interface OrchestratorLogEntry {
+  level: LogLevel;
+  message: string;
+  context?: Record<string, unknown>;
+  metadata?: Record<string, unknown>; // Added metadata property
+  created_at?: string;
 }
 
-export class LogService {
-  static async insertLog(entry: any) {
-    logger.info("LogService: Attempting to insert log into Supabase...");
+/**
+ * Writes a log entry into the `orchestrator_logs` table in Supabase.
+ * If the table does not exist yet, this will fail at runtime but will not
+ * block TypeScript compilation.
+ */
+export async function logOrchestratorEvent(
+  entry: OrchestratorLogEntry
+): Promise<void> {
+  try {
+    const client = getSupabaseServiceClient();
 
-    const { data, error } = await supabaseServerClient
-      .from("orchestrator_logs")
-      .insert(entry);
-
-    if (error) {
-      logger.error("Error logging to Supabase:", error);
-      return { success: false, error };
-    }
-
-    logger.info("LogService: Log successfully inserted into Supabase.");
-    return { success: true, data };
-  }
-
-  static async process(task: any) {
-    const logEntry = {
-      level: task?.level ?? "info",
-      message: task?.message ?? "No message",
-      metadata: task?.metadata ?? {},
-      created_at: new Date().toISOString(),
+    const payload = {
+      level: entry.level,
+      message: entry.message,
+      context: entry.context ?? null,
+      created_at: entry.created_at ?? new Date().toISOString(),
     };
 
-    return await this.insertLog(logEntry);
+    const { error } = await client.from("orchestrator_logs").insert(payload);
+
+    if (error) {
+      console.error("[orchestrator] Failed to insert log entry:", error);
+    }
+  } catch (err) {
+    console.error(
+      "[orchestrator] Error initialising Supabase service client:",
+      err
+    );
   }
 }
-
-export default LogService;

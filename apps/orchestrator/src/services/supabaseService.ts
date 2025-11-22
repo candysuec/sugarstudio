@@ -1,33 +1,32 @@
-import { supabaseServerClient } from "@sugarstudio/supabase-client";
-import { logger } from "@sugarstudio/utils";
-import { Log } from "../types/Log";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-export const logToSupabase = async (log: Log) => {
-  try {
-    const { error } = await supabaseServerClient.from("orchestrator_logs").insert([log]);
+/**
+ * Centralised Supabase service-role client for the orchestrator.
+ * Uses SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY from environment.
+ */
 
-    if (error) {
-      logger.error("Error logging to Supabase:", error.message);
-    } else {
-      logger.info("Log successfully written to Supabase.");
-    }
-  } catch (error: any) {
-    logger.error("Supabase logging failed:", error.message);
+let supabaseServiceClient: SupabaseClient | null = null;
+
+export function getSupabaseServiceClient(): SupabaseClient {
+  if (supabaseServiceClient) {
+    return supabaseServiceClient;
   }
-};
 
-export const getTasksFromSupabase = async () => {
-  try {
-    const { data, error } = await supabaseServerClient.from("tasks").select("*");
+  const url = process.env.SUPABASE_URL;
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-    if (error) {
-      logger.error("Error fetching tasks from Supabase:", error.message);
-      return [];
-    }
-
-    return data;
-  } catch (error: any) {
-    logger.error("Supabase task fetching failed:", error.message);
-    return [];
+  if (!url || !serviceKey) {
+    throw new Error(
+      "Supabase service client is not configured. SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set."
+    );
   }
-};
+
+  supabaseServiceClient = createClient(url, serviceKey, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
+
+  return supabaseServiceClient;
+}

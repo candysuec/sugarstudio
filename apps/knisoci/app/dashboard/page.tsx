@@ -1,82 +1,65 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { createClient } from '../../lib/supabase/edge'; // Assuming a client-side Supabase client for KniSoci
-import { Button } from 'ui'; // Shared UI Button component
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
-export default function KniSociDashboard() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [orchestratorMessage, setOrchestratorMessage] = useState('');
-
-  useEffect(() => {
-    const supabase = createClient();
-    const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
-      setLoading(false);
-    };
-    getUser();
-  }, []);
-
-  const triggerOrchestratorJob = async () => {
-    setOrchestratorMessage('Dispatching job to Orchestrator...');
-    try {
-      const response = await fetch('/api/dispatch-job', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          type: 'MONITOR_BRAND_HEALTH',
-          payload: { userId: user?.id, brandId: 'some-brand-id' }, // Example payload
-        }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        setOrchestratorMessage(`Job dispatched: ${data.message}`);
-      } else {
-        setOrchestratorMessage(`Failed to dispatch job: ${data.message}`);
-      }
-    } catch (error: any) {
-      setOrchestratorMessage(`Error dispatching job: ${error.message}`);
-    }
-  };
-
-  if (loading) {
-    return (
-      <main className="min-h-screen bg-matte-dark text-silver-accent py-12 flex items-center justify-center">
-        <p>Loading user data...</p>
-      </main>
-    );
-  }
-
+export default function DashboardPage() {
   return (
-    <main className="min-h-screen bg-matte-dark text-silver-accent py-12">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-bold text-silver-light mb-8 text-center">KniSoci Dashboard</h1>
+    <main className="min-h-screen bg-black text-white">
+      <div className="mx-auto flex max-w-4xl flex-col gap-8 px-4 py-16">
+        <header className="border-b border-zinc-800 pb-6">
+          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500">
+            KniSoci · Dashboard
+          </p>
+          <h1 className="mt-2 text-3xl font-semibold">
+            Welcome back to your content command center.
+          </h1>
+          <p className="mt-3 text-sm text-zinc-400">
+            This is a placeholder dashboard view. The underlying AI workflows and
+            Supabase data are wired in behind the scenes, but this UI is kept
+            minimal while we stabilise the rest of the system.
+          </p>
+        </header>
 
-        {user ? (
-          <div className="bg-gray-800 p-8 rounded-lg shadow-lg border border-silver-dark mb-8">
-            <h2 className="text-2xl font-semibold text-silver-light mb-4">Welcome, {user.email}!</h2>
-            <p className="text-lg mb-4">This is your brand intelligence hub.</p>
-            <p className="text-sm text-silver-dark">User ID: {user.id}</p>
-
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-silver-light mb-4">Orchestrator Actions</h3>
-              <Button onClick={triggerOrchestratorJob}>Trigger Brand Health Scan</Button>
-              {orchestratorMessage && <p className="mt-4 text-sm">{orchestratorMessage}</p>}
-            </div>
+        <section className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
+            <h2 className="text-sm font-medium text-zinc-100">
+              Recent activity
+            </h2>
+            <p className="mt-2 text-xs text-zinc-400">
+              Activity feed and analytics will appear here in a later phase.
+            </p>
           </div>
-        ) : (
-          <div className="text-center">
-            <p className="text-lg mb-4">Please log in to access the KniSoci dashboard.</p>
-            <Link href="/login">
-              <Button>Go to Login</Button>
+
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4">
+            <h2 className="text-sm font-medium text-zinc-100">
+              Quick actions
+            </h2>
+            <ul className="mt-2 space-y-1 text-xs text-zinc-400">
+              <li>• Generate new content ideas</li>
+              <li>• Draft a post from your brand book</li>
+              <li>• Review brand consistency checks</li>
+            </ul>
+          </div>
+        </section>
+
+        <footer className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-zinc-800 pt-4 text-xs text-zinc-500">
+          <span>Early dashboard placeholder · v0.1</span>
+          <div className="flex gap-3">
+            <Link
+              href="/"
+              className="underline-offset-2 hover:text-zinc-300 hover:underline"
+            >
+              Back to Digital Sugar Studio
+            </Link>
+            <Link
+              href="/signup"
+              className="underline-offset-2 hover:text-zinc-300 hover:underline"
+            >
+              Go to signup
             </Link>
           </div>
-        )}
+        </footer>
       </div>
     </main>
   );
