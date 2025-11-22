@@ -54,9 +54,6 @@ importers:
       '@prisma/client':
         specifier: ^5.19.0
         version: 5.19.0(prisma@5.19.0)
-      '@sugarstudio/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
       '@sugarstudio/utils':
         specifier: workspace:*
         version: link:../../packages/utils
