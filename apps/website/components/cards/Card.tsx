@@ -1,22 +1,27 @@
+"use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import * as React from "react";
+import { motion, HTMLMotionProps } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-interface CardProps {
-  children: React.ReactNode;
+interface CardProps extends HTMLMotionProps<"div"> {
+  children?: React.ReactNode;
   className?: string;
-  motionProps?: any; // Framer Motion props
 }
 
-const Card = ({ children, className, motionProps }: CardProps) => {
-  return (
-    <motion.div
-      className={`bg-brand-slate rounded-md p-6 shadow-soft ${className}`}
-      {...motionProps}
-    >
-      {children}
-    </motion.div>
-  );
-};
+const Card = React.forwardRef<HTMLDivElement, CardProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <motion.div
+        ref={ref}
+        className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)}
+        {...props}
+      >
+        {children}
+      </motion.div>
+    );
+  }
+);
+Card.displayName = "Card";
 
 export default Card;

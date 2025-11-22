@@ -4,8 +4,8 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-// import SiteHeader from '@/components/layout/site-header';
-// import SiteFooter from '@/components/layout/site-footer';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -46,9 +46,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased bg-brand-black text-silver`}>
+        <Header />
         <main className="relative z-10 min-h-screen pt-20"> {/* pt-20 to account for fixed header */}
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

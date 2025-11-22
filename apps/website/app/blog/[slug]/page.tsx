@@ -1,9 +1,9 @@
-
 'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
+import SectionHeader from '@/components/layout/section-header';
 import Link from 'next/link';
 
 // Placeholder for fetching blog post data based on slug
@@ -19,7 +19,7 @@ const getBlogPost = (slug: string) => {
       category: 'Branding',
       image: '/images/blog/storybrand.jpg',
       content: `
-        <p>The StoryBrand framework, developed by Donald Miller, is a powerful tool for businesses to clarify their message. It's based on the idea that all great stories follow a similar pattern, and by applying this pattern to your brand's communication, you can make your message resonate deeply with your audience.</p>
+        <p>The StoryBrand framework, developed by Donald Miller, is a powerful tool for businesses to clarify their message so customers listen. It's based on the idea that all great stories follow a similar pattern, and by applying this pattern to your brand's communication, you can make your message resonate deeply with your audience.</p>
         <h2>Why StoryBrand Matters</h2>
         <p>In a noisy marketplace, clarity is your greatest competitive advantage. Customers are not looking for another product or service; they are looking for a guide to help them solve their problems. StoryBrand helps you position your customer as the hero of the story, and your brand as the trusted guide.</p>
         <h3>The 7-Part Framework</h3>
@@ -159,9 +159,14 @@ const BlogPostPage = ({ params }: BlogPostPageProps) => {
       {/* Related Posts / Final CTA */}
       <section className="py-20 bg-brand-black px-4 text-center">
         <div className="container mx-auto">
-<div>SectionHeader placeholder</div>
+          <SectionHeader
+            title="Continue Your Learning Journey"
+            subtitle="Explore more insights to clarify your message and scale your business."
+          />
           <div className="mt-12">
-<div>Button placeholder</div>
+            <Button href="/blog" size="lg" variant="primary">
+              View All Articles
+            </Button>
           </div>
         </div>
       </section>

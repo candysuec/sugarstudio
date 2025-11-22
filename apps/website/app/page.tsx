@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -27,8 +26,12 @@ export default function HomePage() {
             structure your vision, and build systems that scale.
           </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-<div>Button placeholder</div>
-<div>Button placeholder</div>
+            <Button href="/contact" size="lg" variant="primary">
+              Work With Me
+            </Button>
+            <Button href="/contact" size="lg" variant="outline">
+              Schedule a Strategy Call
+            </Button>
           </div>
         </motion.div>
         {/* Background elements for visual interest */}
@@ -167,7 +170,9 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center mt-12">
-<div>Button placeholder</div>
+            <Button href="/services" size="lg" variant="outline">
+              Explore All Services
+            </Button>
           </div>
         </div>
       </section>
@@ -183,7 +188,9 @@ export default function HomePage() {
             (Placeholder for a dynamic portfolio grid. Coming soon!)
           </p>
           <div className="mt-12">
-<div>Button placeholder</div>
+            <Button href="/portfolio" size="lg" variant="primary">
+              View Case Studies
+            </Button>
           </div>
         </div>
       </section>
@@ -199,7 +206,9 @@ export default function HomePage() {
             (Placeholder for a dynamic testimonials carousel/grid. Coming soon!)
           </p>
           <div className="mt-12">
-<div>Button placeholder</div>
+            <Button href="/contact" size="lg" variant="outline">
+              Ready for Your Success Story?
+            </Button>
           </div>
         </div>
       </section>
@@ -212,10 +221,12 @@ export default function HomePage() {
             subtitle="Stay ahead with expert articles on branding, systems, and business growth."
           />
           <p className="text-brand-gray text-lg mt-8">
-            (Placeholder for a blog post preview grid. Coming soon!)
+            (Placeholder for a dynamic blog post preview grid. Coming soon!)
           </p>
           <div className="mt-12">
-<div>Button placeholder</div>
+            <Button href="/blog" size="lg" variant="primary">
+              Read the Blog
+            </Button>
           </div>
         </div>
       </section>
@@ -242,7 +253,9 @@ export default function HomePage() {
             Stop feeling stuck and start building the clear, scalable, and impactful business you envision.
             Your transformation begins now.
           </motion.p>
-<div>Button placeholder</div>
+          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
+            Start Your Transformation
+          </Button>
         </div>
       </section>
     </div>

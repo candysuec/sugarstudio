@@ -3,7 +3,7 @@
 import { useState } from 'react';
 // import SiteHeader from '@/components/layout/site-header';
 // import SiteFooter from '@/components/layout/site-footer';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { createClient } from '../../lib/supabase/client'; // Import client-side Supabase client
 import Link from 'next/link';
 
@@ -38,7 +38,6 @@ export default function LoginPage() {
 
   return (
     <>
-<div>Header placeholder</div>
       <main className="min-h-screen bg-matte-dark text-silver-accent py-12 flex items-center justify-center">
         <div className="max-w-md w-full bg-gray-800 p-8 rounded-lg shadow-lg border border-silver-dark">
           <h1 className="text-3xl font-bold text-silver-light mb-6 text-center">Login to KniSoci</h1>
@@ -75,7 +74,9 @@ export default function LoginPage() {
               />
             </div>
             <div className="flex items-center justify-between">
-<div>Button placeholder</div>
+            <Button type="submit" disabled={loading}>
+                {loading ? 'Logging in...' : 'Login'}
+              </Button>
             </div>
             {message && (
               <p className={`mt-4 text-center ${message.includes('failed') ? 'text-red-500' : 'text-green-500'}`}>
@@ -92,7 +93,6 @@ export default function LoginPage() {
           </p>
         </div>
       </main>
-<div>Footer placeholder</div>
     </>
   );
 }

@@ -1,9 +1,11 @@
-
 'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
-// import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
+import SectionHeader from '@/components/layout/section-header';
+import Card from '@/components/cards/Card';
+import Link from 'next/link'; // Added Link for navigation
 
 const blogPosts = [
   {
@@ -67,10 +69,28 @@ const BlogIndexPage = () => {
       {/* Blog Post Grid */}
       <section className="py-20 bg-brand-slate px-4">
         <div className="container mx-auto">
-<div>SectionHeader placeholder</div>
+          <SectionHeader
+            title="Latest Articles"
+            subtitle="Dive into actionable insights and strategic advice."
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
             {blogPosts.map((post) => (
-<div>BlogCard placeholder</div>
+              <Card
+                key={post.id}
+                motionProps={{
+                  initial: { y: 50, opacity: 0 },
+                  whileInView: { y: 0, opacity: 1 },
+                  viewport: { once: true },
+                  transition: { duration: 0.6, delay: 0.1 },
+                }}
+              >
+                <Link href={`/blog/${post.slug}`} className="block">
+                  <img src={post.image} alt={post.title} className="mb-4 h-48 w-full object-cover rounded-md" />
+                  <h3 className="text-xl font-bold text-silver mb-2">{post.title}</h3>
+                  <p className="text-brand-gray text-sm">{post.description}</p>
+                  <p className="text-blue-primary text-xs mt-2">{post.date} &bull; {post.category}</p>
+                </Link>
+              </Card>
             ))}
           </div>
         </div>
@@ -79,7 +99,10 @@ const BlogIndexPage = () => {
       {/* Featured Posts (Placeholder) */}
       <section className="py-20 bg-brand-black px-4">
         <div className="container mx-auto text-center">
-<div>SectionHeader placeholder</div>
+          <SectionHeader
+            title="Featured Insights"
+            subtitle="Handpicked articles to help you clarify and scale."
+          />
           <p className="text-brand-gray text-lg mt-8">
             (Placeholder for a featured posts section. Coming soon!)
           </p>
@@ -107,7 +130,9 @@ const BlogIndexPage = () => {
           >
             Let's turn insights into action and build a brand that truly connects.
           </motion.p>
-<div>Button placeholder</div>
+          <Button href="/contact" size="lg" variant="secondary" className="bg-white text-blue-primary hover:bg-gray-100">
+            Schedule a Strategy Call
+          </Button>
         </div>
       </section>
     </div>

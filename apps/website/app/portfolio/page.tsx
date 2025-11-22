@@ -1,4 +1,3 @@
-
 'use client';
 
 import React from 'react';
@@ -104,7 +103,9 @@ const PortfolioPage = () => {
                   </div>
                 </div>
                 <Link href={`/portfolio/${study.id}`} passHref>
-                  <div>Button placeholder</div>
+                  <Button variant="outline" className="mt-8 w-full">
+                    View Full Case Study
+                  </Button>
                 </Link>
               </Card>
             ))}
@@ -133,7 +134,9 @@ const PortfolioPage = () => {
           >
             Your success story is waiting to be written. Let's collaborate and achieve remarkable results together.
           </motion.p>
-          <div>Button placeholder</div>
+          <Button href="/contact" size="lg" variant="outline" className="bg-white text-blue-primary hover:bg-gray-100">
+            Let's Discuss Your Project
+          </Button>
         </div>
       </section>
     </div>
