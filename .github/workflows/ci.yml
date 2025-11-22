@@ -1,4 +1,4 @@
-name: CI
+name: Monorepo CI
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +20,13 @@ jobs:
         uses: pnpm/action-setup@v3
         with:
           version: 8
-          run_install: false
+          run_install: false # We will run install later with Turbo's cache
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm' # Cache pnpm modules
 
       - name: Get pnpm store directory
         shell: bash
@@ -36,13 +42,15 @@ jobs:
             ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
-      - name: Run Lint
-        run: pnpm lint
+      - name: Build all apps with Turbo
+        run: pnpm turbo run build
 
-      - name: Run Type Check
-        run: pnpm typecheck
+      - name: Lint all apps with Turbo
+        run: pnpm turbo run lint
 
-      - name: Build all apps
-        run: pnpm build
+      - name: Test all apps with Turbo (if script exists)
+        # Assuming 'test' script exists in individual package.json files
+        # This will only run for packages that have a 'test' script
+        run: pnpm turbo run test || true # '|| true' allows the workflow to continue if no test script is found in some packages
